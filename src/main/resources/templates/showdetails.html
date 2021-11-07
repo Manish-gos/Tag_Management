@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Show Tag </title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Reference Bootstrap files -->
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+      <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+         $(function () {
+             $("#department").change(function () {
+                 if ($(this).val() == "") {
+                     $("#departmentfield").removeAttr("disabled");
+                     $("#departmentfield").focus();
+                 } else {
+                     $("#departmentfield").attr("disabled", "disabled");
+                 }
+             });
+         });
+      </script>
+      <style>
+         .error {color:red}
+      </style>
+   </head>
+   <body>
+   		 <nav class="navbar navbar-inverse">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+               <li class="active"><a th:href="@{/tagform}">Tag Form</a></li>
+               <li><a th:href="@{/showtags}">All Tags</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <li>
+                  <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/systems}"><span class="glyphicon glyphicon-user"><input class="btn btn-dark" type="submit"  value="Admin" /></span> </a></div>
+               </li>
+               <li>
+                  <a >
+                     <span ></span>
+                     <form class="glyphicon glyphicon-log-in" th:action="@{/logout}" method="POST"><input class="btn btn-dark" type="submit"  value="Logout" /></form>
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <div>
+         <div id="loginbox" style="margin-top: 50px;"
+            class="mainbox col-md-6 col-md-offset-2 col-sm-9 col-sm-offset-2">
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <div class="panel-title text-center" >Tag Details</div>
+               </div>
+               <div style="padding-top: 30px" class="panel-body">
+                  <div class="row ">
+                     <div class="col-sm-4" >
+                        <img th:src="@{\image\tpm.JPG}" height=150px width=150px/>
+                     </div>
+                     <div class="col-sm-8" >
+                        <div class="float-sm-right">
+                           <div style="margin-bottom: 25px" class="float-sm-left">
+                              <table class="table table-borderless">
+                                 <!-- Tagid -->
+                                 <div style="margin-bottom: 25px;margin-bottom: 0px" class="input-group">
+                                    <div class="col-sm-8" >
+                                       <tr >
+                                          <td>
+                                             <h5><label for="id">Tag ID:</label></h5>
+                                          </td>
+                                          <td>
+                                             <h5 th:text=${theTag.id}></h5>
+                                          </td>
+                                       </tr>
+                                       <!-- name -->
+                                       <tr>
+                                          <td>
+                                             <h5><label for="name">Name:</label></h5>
+                                          </td>
+                                          <td>
+                                             <h5 th:text=${theTag.name}></h5>
+                                          </td>
+                                       </tr>
+                                       <!-- date -->
+                                       <tr>
+                                          <td>
+                                             <h5><label for="createDate">Tag Date:</label></h5>
+                                          </td>
+                                          <td>
+                                             <h5 th:text=${theTag.createDate}></h5>
+                                          </td>
+                                       </tr>
+                                       <!-- Status -->
+                                       <tr>
+                                          <td>
+                                             <h5><label for="status">Tag Status:</label></h5>
+                                          </td>
+                                          <td><div th:switch="${theTag.status}">
+            								  <h5 th:case="'OPEN'" class="text-success"><strong>Open</strong></h5>
+           									  <h5 th:case="'CLOSE'" class="text-danger"><strong>Closed</strong></h5>
+										  </td>
+                                       </tr>
+                                    </div>
+                                 </div>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <table class="table table-borderless">
+                     <div style="margin-bottom: 25px; margin-bottom: 0px" class="input-group">
+                        <div class="col-sm-8" >
+                           <!-- Area -->
+                           <tr>
+                              <td>
+                                 <h5><label for="area">Area:</label></h5>
+                              </td>
+                              <td>
+                                 <h5 th:text=${theTag.area}></h5>
+                              </td>
+                           </tr>
+                           <!-- SubArea -->
+                           <tr>
+                              <td>
+                                 <h5><label for="subarea">Sub Area:</label></h5>
+                              </td>
+                              <td>
+                                 <h5 th:text=${theTag.subArea}></h5>
+                              </td>
+                           </tr>
+                           <!-- Discription -->
+                           <tr>
+                              <td>
+                                 <h5><label for="description">Description:</label></h5>
+                              </td>
+                              <td>
+                                 <h5 th:text=${theTag.description}></h5>
+                              </td>
+                           </tr>
+                           <!-- image -->
+                           <tr>
+                              <td>
+                                 <h5><label for="image">Image:</label></h5>
+                              </td>
+                              <td><img th:src="@{${theTag.image}}" height=300px width=200px/> </td>
+                           </tr>
+                        </div>
+                     </div>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>

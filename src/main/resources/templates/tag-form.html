@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Register New User Form</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Reference Bootstrap files -->
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+      <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+         $(function () {
+             $("#area").change(function () {
+                 if ($(this).val() == "") {
+                     $("#areafield").removeAttr("disabled");
+                     $("#areafield").focus();
+                 } else {
+                     $("#areafield").attr("disabled", "disabled");
+                 }
+             });
+         });
+         
+          $(function () {
+             $("#description").change(function () {
+                 if ($(this).val() == "") {
+                     $("#descriptionfield").removeAttr("disabled");
+                     $("#descriptionfield").focus();
+                 } else {
+                     $("#descriptionfield").attr("disabled", "disabled");
+                 }
+             });
+         });
+         
+          $(function () {
+             $("#subArea").change(function () {
+                 if ($(this).val() == "") {
+                     $("#subAreafield").removeAttr("disabled");
+                     $("#subAreafield").focus();
+                 } else {
+                     $("#subAreafield").attr("disabled", "disabled");
+                 }
+             });
+         });
+         
+         function readURL(input) {
+             if (input.files && input.files[0]) {
+                 var reader = new FileReader();
+         
+                 reader.onload = function (e) {
+                     $('#blah')
+                         .attr('src', e.target.result)
+                         .width(150)
+                         .height(200);
+                 };
+         
+                 reader.readAsDataURL(input.files[0]);
+             }
+         }
+      </script>
+      <style>
+         .error {color:red}
+      </style>
+   </head>
+   <body>
+   		 <nav class="navbar navbar-inverse">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+               <li class="active"><a th:href="@{/tagform}">Tag Form</a></li>
+               <li><a th:href="@{/showtags}">All Tags</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <li>
+                  <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/systems}"><span class="glyphicon glyphicon-user"><input class="btn btn-dark" type="submit"  value="Admin" /></span> </a></div>
+               </li>
+               <li>
+                  <a >
+                     <span ></span>
+                     <form class="glyphicon glyphicon-log-in" th:action="@{/logout}" method="POST"><input class="btn btn-dark" type="submit"  value="Logout" /></form>
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <div>
+      <div id="loginbox" style="margin-top: 50px;"
+         class="mainbox col-md-6 col-md-offset-2 col-sm-9 col-sm-offset-2">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <div class="panel-title text-center">Register New Tag</div>
+            </div>
+            <div style="padding-top: 30px" class="panel-body">
+               <!-- Tag Form -->
+               <form th:action="@{/savetag}" 
+                  th:object="${tagAttr}" method="POST"
+                  class="form-horizontal" enctype="multipart/form-data">
+                  <!-- Place for messages: error, alert etc ... -->
+                  <div class="form-group">
+                     <div class="col-xs-15">
+                        <div>
+                           <!-- Check for registration error -->
+                           <div th:if="${registrationError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
+                              ${registrationError}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row ">
+                     <div class="col-sm-4" >
+                        <img th:src="@{\image\tpm.jpg}" height=150px width=150px/>
+                     </div>
+                     <div class="col-sm-8" >
+                        <div class="float-sm-right">
+                           <!-- name -->
+                           <div style="margin-bottom: 25px" class="float-sm-left">
+                              <table class="table table-borderless">
+                                 <tr>
+                                    <td><label for="name">Name:</label></td>
+                                    <td><input type="text" th:field="*{name}"  disabled="disabled" /></td>
+                                 </tr>
+                                 <tr>
+                                    <td> <label for="date">Date:</label></td>
+                                    <td><input type="text" th:field="*{createDate}" disabled="disabled" /></td>
+                                 </tr>
+                                 <tr>
+                                    <td> <label for="department">Department:</label></td>
+                                    <td><input type="text" th:field="*{department}"  disabled="disabled" /></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Area -->
+                     <div style="margin-bottom: 25px" class="input-group">
+                        <label style="margin-left: 25px" for="area">Area/Line:</label> 
+                        <select th:id="area" th:field="*{area}" placeholder="Area/Line (*)" th:errorclass="fieldError" >
+                           <option th:value="'A'" th:text="A"></option>
+                           <option th:value="'B'" th:text="'B'"></option>
+                           <option th:value="'C'" th:text="'C'"></option>
+                           <option th:value="'D'" th:text="'D'"></option>
+                           <option th:value="'E'" th:text="'E'"></option>
+                           <option th:value="'F'" th:text="'F'"></option>
+                           <option th:value="'G'" th:text="'G'"></option>
+                           <option th:value="'H'" th:text="'H'"></option>
+                           <option th:value="''" th:text="'Other'"></option>
+                        </select>
+                        <input style="margin-left: 25px" type="text" th:field="*{area}" th:id="areafield" disabled="disabled" placeholder="Area/Line (*)"   th:errorclass="fieldError" />
+                     </div>
+                     <div th:if="${#fields.hasErrors('area')}"
+                        style="margin-bottom: 25px" class="text-danger">
+                        <ul>
+                           <li th:each="err : ${#fields.errors('area')}" th:text="'area ' + ${err}" />
+                        </ul>
+                     </div>
+                     <!-- SubArea -->
+                     <div style="margin-bottom: 25px" class="input-group">
+                        <label style="margin-left: 25px" for="subArea">Sub Area/Sub Line/Line:</label>  
+                        <select th:id="subArea" th:field="*{subArea}" placeholder="SubArea/SubLine (*)"    th:errorclass="fieldError" >
+                           <option th:value="'A'" th:text="Aaaaaaaaaaaaaaaaaaaaaaa"></option>
+                           <option th:value="'B'" th:text="'B'"></option>
+                           <option th:value="'C'" th:text="'C'"></option>
+                           <option th:value="'D'" th:text="'D'"></option>
+                           <option th:value="'E'" th:text="'E'"></option>
+                           <option th:value="'F'" th:text="'F'"></option>
+                           <option th:value="'G'" th:text="'G'"></option>
+                           <option th:value="'H'" th:text="'H'"></option>
+                           <option th:value="''" th:text="'Other'"></option>
+                        </select>
+                        <input style="margin-left: 25px" type="text" th:field="*{subArea}" th:id="subAreafield" disabled="disabled" placeholder="SubArea/SubLine (*)"   th:errorclass="fieldError" />
+                     </div>
+                     <div th:if="${#fields.hasErrors('subArea')}"
+                        style="margin-bottom: 25px" class="text-danger">
+                        <ul>
+                           <li th:each="err : ${#fields.errors('subArea')}" th:text="'subArea ' + ${err}" />
+                        </ul>
+                     </div>
+                     <!-- Discription -->
+                     <div style="margin-bottom: 25px" class="input-group">
+                        <label style="margin-left: 25px" for="description">Discription:</label>   
+                        <div style="margin-left: 25px" class="custom-control custom-radio custom-control-inline">
+                           <input type="radio" id="option1" name="option1"  value="A" th:field="*{description}">
+                           <label class="custom-control-label" for="option1">Option1</label>
+                        </div>
+                        <div style="margin-left: 25px" class=" custom-radio custom-control-inline">
+                           <input type="radio" id="option2" name="option1"  value="B" th:field="*{description}">
+                           <label class="custom-control-label" for="option1">Option2</label>
+                        </div>
+                        <input style="margin-left: 25px" type="text" th:field="*{description}" th:id="descriptionfield" disabled="disabled" placeholder="description (*)" th:errorclass="fieldError" />
+                     </div>
+                     <div th:if="${#fields.hasErrors('department')}"
+                        style="margin-bottom: 25px" class="text-danger">
+                        <ul>
+                           <li th:each="err : ${#fields.errors('description')}" th:text="'description ' + ${err}" />
+                        </ul>
+                     </div>
+                     <!-- image -->
+                     <div style="margin-bottom: 25px" class="input-group">
+                        <label style="margin-left: 25px" class="custom-control-label" for="image">Image:</label> 
+                        <input type="file" style="margin-left: 25px"  name="image" id="image" required="required" onchange="readURL(this);"  accept="image/png, image/jpeg" />
+                     </div>
+                     <img style="margin-left: 25px" id="blah" src="#" alt="your image" />
+                     <!-- Register Button -->
+                     <div style="margin-top: 10px" class="form-group">
+                        <div class="col-sm-6 controls">
+                           <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                     </div>
+               </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
