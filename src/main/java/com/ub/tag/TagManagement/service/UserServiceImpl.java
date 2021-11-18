@@ -1,6 +1,7 @@
 package com.ub.tag.TagManagement.service;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,11 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(crmUser.getFirstName());
 		user.setLastName(crmUser.getLastName());
 		user.setEmail(crmUser.getEmail());
-		user.setDepartment(crmUser.getDepartment().substring(1));
+		String deprtment=crmUser.getDepartment();
+		if(deprtment.contains("other"))
+			deprtment=deprtment.substring(6).toUpperCase();
+		
+		user.setDepartment(deprtment);
 		// give user default role of "employee"
 		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
 
@@ -69,5 +74,10 @@ public class UserServiceImpl implements UserService {
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+	
+	@Transactional
+	public List<User> getAll() {
+		return userDao.getAll();
 	}
 }

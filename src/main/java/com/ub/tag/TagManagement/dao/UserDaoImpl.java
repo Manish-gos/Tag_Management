@@ -1,4 +1,6 @@
 package com.ub.tag.TagManagement.dao;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
@@ -39,6 +41,15 @@ public class UserDaoImpl implements UserDao {
 
 		// create the user ... finally LOL
 		currentSession.saveOrUpdate(theUser);
+	}
+
+	@Override
+	public List<User> getAll() {
+		// get all users
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<User> query= currentSession.createQuery("from User", User.class);
+		
+		return query.getResultList();
 	}
 
 }

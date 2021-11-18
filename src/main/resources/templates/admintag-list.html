@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+	<!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
    <head>
    
@@ -19,9 +19,9 @@
                <a class="navbar-brand" th:href="@{/}">Tagit</a>
             </div>
             <ul class="nav navbar-nav">
-               <li ><a th:href="@{/tagform}">Tag Form</a></li>
-               <li><a th:href="@{/showtags}">All Tags</a></li>
-               <li><a th:href="@{/showassignedtags}">Assigned Tags</a></li>
+               <li ><a th:href="@{/}">Go to Home</a></li>
+               
+               
             </ul>
             <ul class="nav navbar-nav navbar-right">
                <li>
@@ -37,6 +37,8 @@
          </div>
       </nav>
       <div>
+      
+      <h2>Welcome Admin </h2>
      <div id="loginbox" style="margin-top: 50px;"
          class="mainbox col-md-6 col-md-offset-2 col-sm-9 col-sm-offset-2">
          <div class="panel panel-primary">
@@ -53,6 +55,7 @@
             <th>Date</th>
             <th>Status</th>
             <th>Action</th>
+           
          </tr>
          <tr th:each=" ttag : ${theTag}">
             <td th:text="${ttag.id}"></td>
@@ -65,7 +68,9 @@
              <p th:case="'false'" class="text-danger"><strong>Closed</strong></p>
 			</td>
             <td><a th:href="@{/showdetails(id=${ttag.id})}" >Show</a>
+           
          </tr>
+         
       </table></div>
           </div></div></div>
    </body>

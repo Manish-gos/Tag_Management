@@ -16,7 +16,7 @@
    	 <nav class="navbar navbar-inverse">
          <div class="container-fluid">
             <div class="navbar-header">
-               <a class="navbar-brand" th:href="@{/}">Tagit</a>
+                <a class="navbar-brand" th:href="@{/}">Tagit</a>
             </div>
             <ul class="nav navbar-nav">
                <li ><a th:href="@{/tagform}">Tag Form</a></li>
@@ -47,25 +47,24 @@
       <table class="table table-borderless">
          <tr>
             <th>id</th>
-            <th>Area</th>
-            <th>Sub-Area</th>
+            <th>TagId</th>
             <th>Description</th>
-            <th>Date</th>
             <th>Status</th>
+            <th>Check</th>
             <th>Action</th>
          </tr>
-         <tr th:each=" ttag : ${theTag}">
+         <tr th:each=" ttag : ${assign}">
+                   <th:block th:if="${ttag.status}">
             <td th:text="${ttag.id}"></td>
-            <td th:text="${ttag.area}"></td>
-            <td th:text="${ttag.subArea}"></td>
+            <td th:text="${ttag.tagId}"></td>
             <td th:text="${ttag.description}"></td>
-            <td th:text="${ttag.createDate}"></td>
             <td><div th:switch="${ttag.status}">
              <p th:case="'true'" class="text-success"><strong>Open</strong></p>
              <p th:case="'false'" class="text-danger"><strong>Closed</strong></p>
 			</td>
-            <td><a th:href="@{/showdetails(id=${ttag.id})}" >Show</a>
-         </tr>
+            <td><a th:href="@{/showdetails(id=${ttag.tagId})}" >Show</a></td>
+            <td><a th:href="@{/detag(id=${ttag.tagId})}" >DeTag</a>
+         </th:block></tr>
       </table></div>
           </div></div></div>
    </body>

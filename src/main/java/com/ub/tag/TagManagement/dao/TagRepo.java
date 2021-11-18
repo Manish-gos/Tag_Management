@@ -14,4 +14,10 @@ import com.ub.tag.TagManagement.Model.Tag;
 public interface TagRepo extends JpaRepository<Tag, Long>{
 
 	List<Tag> findByUserNameOrderByIdDesc(String userName);
+
+	List<Tag> findByAreaOrderByIdDesc(String area);
+
+	List<Tag> findByDepartmentOrderByIdDesc(String department);
+	
+	
 }

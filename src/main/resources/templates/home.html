@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
    <head>
-      <title>luv2code Company Home Page</title>
+      <title>TagIt</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -11,15 +11,16 @@
       <nav class="navbar navbar-inverse">
          <div class="container-fluid">
             <div class="navbar-header">
-               <a class="navbar-brand" href="#">WebSiteName</a>
+               <a class="navbar-brand" th:href="@{/}">Tagit</a>
             </div>
             <ul class="nav navbar-nav">
-               <li class="active"><a th:href="@{/tagform}">Tag Form</a></li>
+               <li ><a th:href="@{/tagform}">Tag Form</a></li>
                <li><a th:href="@{/showtags}">All Tags</a></li>
+                <li><a th:href="@{/showassignedtags}">Assigned Tags</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                <li>
-                  <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/systems}"><span class="glyphicon glyphicon-user"><input class="btn btn-dark" type="submit"  value="Admin" /></span> </a></div>
+                  <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/systems/}"><span class="glyphicon glyphicon-user"><input class="btn btn-dark" type="submit"  value="Admin" /></span> </a></div>
                </li>
                <li>
                   <a >
@@ -30,12 +31,19 @@
             </ul>
          </div>
       </nav>
-      <h2>luv2code Company Home Page</h2>
+      <h2>TagIt</h2>
       <hr>
       <p>
-         Welcome to the luv2code company home page!
+         TagIt Home Page
       </p>
       <hr>
+      <!-- Background image -->
+<div class="bg-image" 
+     style="background-image: url('image/indian-beer-kingfisher.jpg');
+            height: 100vh">
+</div>
+      
+      
       <!-- display user name and role -->
       <div>
          User: <span sec:authentication="name"></span>
@@ -47,18 +55,6 @@
             <p th:text="'First name: ' + ${session.user.firstName} + ', Last name: ' + ${session.user.lastName} + ', Email: ' + ${session.user.email}"></p>
          </div>
       </div>
-      <div sec:authorize="hasRole('ROLE_MANAGER')">
-         <!-- Add a link to point to /leaders ... this is for the managers -->
-         <p>
-            <a th:href="@{/leaders}">Leadership Meeting</a>
-            (Only for Manager peeps)
-         </p>
-      </div>
-      <div sec:authorize="hasRole('ROLE_ADMIN')">
-         <p>
-            <a th:href="@{/systems}">IT Systems Meeting</a>
-            (Only for Admin peeps)
-         </p>
-      </div>
+     
    </body>
 </html>

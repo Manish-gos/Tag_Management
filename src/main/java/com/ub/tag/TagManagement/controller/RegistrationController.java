@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ub.tag.TagManagement.Model.User;
+import com.ub.tag.TagManagement.config.Email;
 import com.ub.tag.TagManagement.service.UserService;
 import com.ub.tag.TagManagement.user.CrmUser;
 
@@ -25,6 +26,9 @@ public class RegistrationController {
 	
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private Email gmail;
 	
     private Logger logger = Logger.getLogger(getClass().getName());
     
@@ -51,7 +55,7 @@ public class RegistrationController {
 				Model theModel) {
 		
 		String userName = theCrmUser.getUserName();
-		logger.info("Processing registration form for: " + userName);
+		logger.info("Processing registration form for: " + userName +"   ");
 		System.out.println(theCrmUser.getDepartment()+"------------------------------------");
 		
 		// form validation
@@ -69,9 +73,16 @@ public class RegistrationController {
         	return "registration-form";
         }
         
-        // create user account        						
+        // create user account  
+        String Department=theCrmUser.getDepartment().toUpperCase();
+        System.out.println(Department+"-----------------------------------");
+        theCrmUser.setDepartment(Department);
         userService.save(theCrmUser);
-        
+        //Email
+        String message="<h1>Congratulations ....!"+ theCrmUser.getFirstName() +" "
+        +theCrmUser.getLastName() +" you have successfully registerd to Tag Management system </h1>";
+       gmail.sendEmail(theCrmUser.getEmail(), message);
+        System.out.println("Email has been send to "+theCrmUser.getEmail());
         logger.info("Successfully created user: " + userName);
         
         return "registration-confirmation";		
